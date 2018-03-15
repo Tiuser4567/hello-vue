@@ -1,25 +1,35 @@
 <template>
 <div>
-  <div class="menu">Menu</div>
-  <div class="header"></div>
-  <div class="error">Error</div>
+  <div class="title">{{ getLabel('screens.screen001.title') }}</div>
+  <header-tag></header-tag>
+  <error-tag></error-tag>
   <div class="content">
-  <PanelTag></PanelTag>
+    <panel-tag v-bind:title="'<user> Profile'" icon="user">
+
+    </panel-tag>
+    <panel-tag v-bind:title="'Other Details'" icon="list-ul">
+
+    </panel-tag>
   </div>
 </div>
 </template>
 
 <script>
-import LanguageOptions from '../../services/LanguageOptions.js';
 import PanelTag from '../gui/PanelTag.vue';
+import HeaderTag from '../gui/HeaderTag.vue';
+import ErrorTag from '../gui/ErrorTag.vue';
 
 export default {
   name: 'Screen001',
+  
   data: function() {
-    return {msg: 'test'};
+    return {};
   },
+  
   components: {
-    'PanelTag': PanelTag
+    'header-tag': HeaderTag,
+    'error-tag': ErrorTag,
+    'panel-tag': PanelTag
   }
 }
 </script>

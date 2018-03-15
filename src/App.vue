@@ -5,17 +5,30 @@
 </template>
 
 <script>
-import Screen001 from './components/screens/Screen001.vue';
-import LanguageOptions from './services/LanguageOptions.js';
+import 'vue-awesome/icons/user';
+import 'vue-awesome/icons/list-ul';
+import 'vue-awesome/icons/angle-up';
+import 'vue-awesome/icons/angle-down';
 
+import Vue from 'vue';
+import LabelMixin from './mixins/LabelMixin.vue';
+import Screen001 from './components/screens/Screen001.vue';
+import AppLocaleService from './services/AppLocaleService.js';
+
+Vue.mixin(LabelMixin);
 
 export default {
   name: 'app',
+  
   data: function() {
-    console.log(LanguageOptions);
-    LanguageOptions.setLanguage("zh");
-    console.log(LanguageOptions.getLanguage());
-    return { currentView: Screen001 };
+    return { 
+      AppLocaleService: AppLocaleService,
+      currentView: Screen001, 
+    };
+  },
+  
+  components: {
+    
   }
 }
 </script>
