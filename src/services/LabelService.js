@@ -21,9 +21,7 @@ export default {
   },
   
   getLabel: function(locale, key) {
-    var args = Array.prototype.slice.call(arguments, 2);
-    args.unshift(locale, key);
-    return this._getFormattedLabel.apply(this, args);
+    return this._getFormattedLabel.apply(this, arguments);
   },
   
   format : function(str) {
@@ -39,7 +37,10 @@ export default {
       "services.applocale.lang.tl": "Tagalog",
       "components.gui.langctrl.label": "Language",
       
-      "screens.screen001.title": "User" 
+      "screens.screen001.title": "User",
+      "screens.screen001.profile.nouser": "User Profile",
+      "screens.screen001.profile.hasuser": "{0}'s Profile",
+      "screens.screen001.otherdetails": "Other Details" 
     },
     
     "tl": {
@@ -47,7 +48,10 @@ export default {
       "services.applocale.lang.tl": "Tagalog",
       "components.gui.langctrl.label": "Lenggwahe",
       
-      "screens.screen001.title": "Taga-gamit"
+      "screens.screen001.title": "Taga-gamit",
+      "screens.screen001.profile.nouser": "Profile ng Taga-gamit",
+      "screens.screen001.profile.hasuser": "Profile ni {0}",
+      "screens.screen001.otherdetails": "Ibang Detalye" 
     }
   }
 

@@ -58,6 +58,7 @@ export default {
   display: inline-block;
   padding: 10px;
   color: #FFFFFF;
+  text-align: left;
 }
 
 .lang-ctrl select {
