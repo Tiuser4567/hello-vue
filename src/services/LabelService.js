@@ -1,9 +1,18 @@
+import EN_LABELS from '../props/labels_en.js'
+import TL_LABELS from '../props/labels_tl.js'
+
 export default {
+  _getLabelProps: function(locale) {
+    if (locale == 'tl'){
+      return TL_LABELS;
+    }
+    return EN_LABELS;
+  },
   
   _getLabel: function(locale, key) {
-    if (this.LABELS[locale]) {
-      if (this.LABELS[locale][key] != null) {
-        return this.LABELS[locale][key];
+    if (this._getLabelProps(locale)) {
+      if (this._getLabelProps(locale)[key] != null) {
+        return this._getLabelProps(locale)[key];
       }
     }
     return null;
@@ -29,30 +38,5 @@ export default {
     return str.replace(/\{(\d+)\}/g, function(match, number) {
       return typeof args[number] != 'undefined' && args[number] != null? args[number]: "";
     });
-  },
-  
-  LABELS: {
-    "en": {
-      "services.applocale.lang.en": "English",
-      "services.applocale.lang.tl": "Tagalog",
-      "components.gui.langctrl.label": "Language",
-      
-      "screens.screen001.title": "User",
-      "screens.screen001.profile.nouser": "User Profile",
-      "screens.screen001.profile.hasuser": "{0}'s Profile",
-      "screens.screen001.otherdetails": "Other Details" 
-    },
-    
-    "tl": {
-      "services.applocale.lang.en": "Ingles",
-      "services.applocale.lang.tl": "Tagalog",
-      "components.gui.langctrl.label": "Lenggwahe",
-      
-      "screens.screen001.title": "Taga-gamit",
-      "screens.screen001.profile.nouser": "Profile ng Taga-gamit",
-      "screens.screen001.profile.hasuser": "Profile ni {0}",
-      "screens.screen001.otherdetails": "Ibang Detalye" 
-    }
   }
-
 };
