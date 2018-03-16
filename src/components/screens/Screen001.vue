@@ -4,7 +4,7 @@
   <error-tag></error-tag>
   <div class="content">
     <panel-tag
-      v-bind:title="getLabel(fullName? 'screens.screen001.profile.hasuser': 'screens.screen001.profile.nouser', fullName)"
+      v-bind:title="getLabel(profileName? 'screens.screen001.profile.hasuser': 'screens.screen001.profile.nouser', profileName)"
       icon="user"> <form-tag>
     <div>
       <label-tag v-model="username"></label-tag>
@@ -17,6 +17,8 @@
     </div>
     <div>
       <input-tag v-model="pwd"></input-tag>
+      <input-tag v-model="fname"></input-tag>
+      <input-tag v-model="lname"></input-tag>
     </div>
     <div>
       <label-tag v-model="gender"></label-tag>
@@ -55,8 +57,17 @@ export default {
   },
   
   computed: {
-    fullName: function() {
-      return "test";
+    profileName: function() {
+      if (this.fname.value != null && this.fname.value != "" && 
+          this.lname.value != null && this.lname.value != "") {
+        return this.fname.value + " " + this.lname.value;
+      } else if (this.fname.value != null && this.fname.value != "") {
+        return this.fname.value;
+      } else if (this.lname.value != null && this.lname.value != "") {
+        return this.lname.value;
+      }
+      
+      return null;
     }
   },
   
