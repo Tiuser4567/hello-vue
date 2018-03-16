@@ -58,16 +58,22 @@ export default {
   
   computed: {
     profileName: function() {
-      if (this.fname.value != null && this.fname.value != "" && 
-          this.lname.value != null && this.lname.value != "") {
+      if (this.isNotEmpty(this.fname.value) && 
+          this.isNotEmpty(this.lname.value)) {
         return this.fname.value + " " + this.lname.value;
-      } else if (this.fname.value != null && this.fname.value != "") {
+      } else if (this.isNotEmpty(this.fname.value)) {
         return this.fname.value;
-      } else if (this.lname.value != null && this.lname.value != "") {
+      } else if (this.isNotEmpty(this.lname.value)) {
         return this.lname.value;
       }
       
       return null;
+    }
+  },
+  
+  methods: {
+    isNotEmpty: function(value) {
+      return value != null && value != "";
     }
   },
   
