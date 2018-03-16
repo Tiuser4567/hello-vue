@@ -3,7 +3,7 @@
   <div v-for="([key, val], index) in lookup" v-bind:key="key">
     <input v-bind:name="name" v-bind:id="index == 0? id : id + '_' + index" 
            type="radio" v-bind:value="key" v-model="selected"  />
-    <label v-bind:for="index == 0? id : id + '_' + index">{{ val }}</label>
+    <label v-bind:for="index == 0? id : id + '_' + index">{{ getLabel(val) }}</label>
   </div>
 </div>
 </template>
