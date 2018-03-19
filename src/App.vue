@@ -41,4 +41,19 @@ body {
 #app {
   
 }
+
+.form-label {
+  display: inline-block;
+  text-align: right;
+  width: 20%;
+  vertical-align: top;
+  padding-bottom: 0.5em;
+}
+
+.form-input {
+  display: inline-block;
+  text-align: left;
+  width: 70%;
+  padding-bottom: 0.5em;
+}
 </style>

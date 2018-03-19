@@ -1,5 +1,6 @@
 <template>
-<div class="radio-grp-tag">
+<span v-if="readonly">{{readOnlyValue}}</span> 
+<div v-else class="radio-grp-tag">
   <div v-for="([key, val], index) in lookup" v-bind:key="key">
     <input v-bind:name="name" v-bind:id="index == 0? id : id + '_' + index" 
            type="radio" v-bind:value="key" v-model="selected"  />
@@ -34,14 +35,18 @@ export default {
   },
   
   data: function() {
+    let selected = null;
+    if (this.value != null) {
+      selected = this.value;
+    }
     return {
-      selected: []
+      selected: selected
     };
   },
   
   watch: {
     selected: function(newVal) {
-      this.$emit('change', Object.assign({}, this.inputItem, {value: newVal}));
+      this.$emit('change', this.inputItem.clone({value: newVal}));
     }
   }
 }

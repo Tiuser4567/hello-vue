@@ -88,13 +88,13 @@ export default {
 
 .panel-tag .button-bar {
   display: inline-block;
-  width: 40%;
+  width: 45%;
   text-align: right;
 }
 
 .panel-tag .toggle-bar {
   display: inline-block;
-  width: 10%;
+  width: 5%;
   text-align: right;
 }
 

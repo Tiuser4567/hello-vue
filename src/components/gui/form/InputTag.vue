@@ -1,9 +1,11 @@
-<template> 
-<input v-bind:name="name" v-bind:id="id" class="input-tag"
+<template>
+<span v-if="readonly">{{readOnlyValue}}</span> 
+<input v-else v-bind:name="name" v-bind:id="id" class="input-tag"
   ref="input" v-bind:value="value"
   v-on:input="updateValue($event.target.value)"
   v-on:change="trimValue($event.target.value)" v-bind:type="type"
-  v-bind:placeholder="placeholderComp" /> 
+  v-bind:placeholder="placeholderComp"
+  v-bind:size="size" /> 
 </template>
 
 <script>
@@ -67,12 +69,37 @@ export default {
         }
         return null;
       }
+    },
+    
+    readonly: {
+      type: Boolean,
+      default: function() {
+        if (this.inputItem != null && this.inputItem.readonly != null) {
+          return this.inputItem.readonly;
+        }
+        return false;
+      }
+    },
+    
+    size: {
+      default: function() {
+        if (this.inputItem != null && this.inputItem.size != null) {
+          return this.inputItem.size;
+        }
+        return null;
+      }
     }
   },
   
   computed: {
     placeholderComp: function() {
       return this.getLabel(this.placeholder);
+    },
+    readOnlyValue: function() {
+      if (this.value != null && this.value != "") {
+        return this.value
+      }
+      return "-";
     }
   },
   
@@ -83,8 +110,7 @@ export default {
       if (formattedValue !== value) {
         this.$refs.input.value = formattedValue; 
       }
-      
-      this.$emit('input', Object.assign({}, this.inputItem, {value: formattedValue}));
+      this.$emit('input', this.inputItem.clone({value: formattedValue}));
     },
     
     trimValue: function (value) {
@@ -97,7 +123,7 @@ export default {
       if (formattedValue !== value) {
         this.$refs.input.value = formattedValue;
         
-        this.$emit('input', Object.assign({}, this.inputItem, {value: formattedValue}));
+        this.$emit('input',  this.inputItem.clone({value: formattedValue}));
       }
     }
   }

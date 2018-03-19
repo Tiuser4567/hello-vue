@@ -1,7 +1,7 @@
 <template>
   <label class="label-tag" 
          v-bind:for="forAtt">
-     {{ labelComp }}<span v-if="mandatory" class="mandatory">*</span>
+     {{ labelComp }}<span v-if="mandatory && !readonly" class="mandatory">*</span>
      <span v-if="hasColon" class="colon">:</span>
   </label>
 </template>
@@ -35,6 +35,8 @@ export default {
       default: function() {
         if (this.inputItem != null && this.inputItem.label != null) {
           return this.inputItem.label;
+        } else if (this.inputItem != null && this.inputItem.name != null) {
+          return this.inputItem.name;
         }
         return null;
       }
@@ -58,6 +60,16 @@ export default {
         }
         return false;
       }
+    },
+    
+    readonly: {
+      type: Boolean,
+      default: function() {
+        if (this.inputItem != null && this.inputItem.readonly != null) {
+          return this.inputItem.readonly;
+        }
+        return false;
+      }
     }
   },
   
@@ -72,6 +84,9 @@ export default {
 
 
 <style>
+  .label-tag {
+    padding-right: 20px;
+  }
   .label-tag .mandatory {
     color: red;
   }

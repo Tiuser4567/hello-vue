@@ -49,6 +49,6 @@ export default {
 }
 
 .header-tag .right>.lang-ctrl {
-  margin-right: 3em;
+  margin-right: 4em;
 }
 </style>

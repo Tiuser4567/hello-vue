@@ -29,7 +29,7 @@ export default {
     return key;
   },
   
-  getLabel: function(locale, key) {
+  getLabel: function(/* locale, key */) {
     return this._getFormattedLabel.apply(this, arguments);
   },
   

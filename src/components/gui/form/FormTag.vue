@@ -1,5 +1,5 @@
 <template>
-  <form class="form-tag">
+  <form class="form-tag" novalidate="true">
     <slot/>
   </form>
 </template>
