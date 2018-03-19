@@ -70,6 +70,8 @@ export default {
 .panel-tag {
   display: block;
   padding: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .panel-tag .panel-header {
