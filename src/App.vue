@@ -1,6 +1,6 @@
 <template>
 <div id="app">
-  <component v-bind:is="currentView"> </component>
+   <component v-bind:is="currentView"> </component> 
 </div>
 </template>
 
@@ -9,6 +9,7 @@ import 'vue-awesome/icons/user';
 import 'vue-awesome/icons/list-ul';
 import 'vue-awesome/icons/angle-up';
 import 'vue-awesome/icons/angle-down';
+import 'vue-awesome/icons/times';
 
 import Vue from 'vue';
 import LabelMixin from './mixins/LabelMixin.vue';

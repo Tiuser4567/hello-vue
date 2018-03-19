@@ -1,17 +1,17 @@
 <template>
   <div class="error">
-    
-  </div>
-  <div>
-  
+    Test
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Screen001',
+  name: 'Modal001a',
   props: {
     msg: String
+  },
+  data: function() {
+    return {visible: true};
   }
 }
 </script>

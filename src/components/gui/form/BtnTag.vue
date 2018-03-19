@@ -1,7 +1,7 @@
 <template>
 <button v-on:click="onClick($event)"
   v-bind:class="{'btn-tag': true, 'highlighted': highlight == 'true' }">
-  <slot />
+  <slot>{{labelComp}}</slot>
 </button>
 </template>
 
@@ -13,6 +13,16 @@ export default {
     highlight: {
       type: String,
       default: 'false'
+    },
+    label: {
+      type: String,
+      default: null
+    }
+  },
+  
+  computed: {
+    labelComp: function() {
+      return this.getLabel(this.label);
     }
   },
   

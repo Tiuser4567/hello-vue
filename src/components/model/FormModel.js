@@ -1,8 +1,8 @@
 import Vue from 'vue';
-
 export default function FormModel () {
   this.items = {};
   this.formValidators = [];
+  this.editMode = false;
 }
 
 FormModel.prototype.addItem = function(item) {
@@ -10,10 +10,14 @@ FormModel.prototype.addItem = function(item) {
   return item;
 };
 
-FormModel.prototype.setReadonly = function(readonly) {
+FormModel.prototype.setAllItemOptions = function(opt) {
   for (let name in this.items) {
-    this.items[name].readonly = true;
+    this.setItemOptions(name, opt);
   }
+}
+
+FormModel.prototype.setItemOptions = function(name, opt) {
+  this.items[name] = this.items[name].clone(opt);
 }
 
 FormModel.prototype.addValidator = function(validator) {
@@ -46,3 +50,17 @@ FormModel.prototype.validate = function() {
   }
   return errors;
 };
+
+FormModel.prototype.save = function() {
+  let data = {};
+  for (let name in this.items) {
+    data[name] = this.items[name].value; 
+  }
+  return data;
+}
+
+FormModel.prototype.restore = function(data) {
+  for (let name in this.items) {
+    this.setItemOptions(name, {value : data[name]});
+  }
+}

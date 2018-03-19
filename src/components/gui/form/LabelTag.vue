@@ -1,8 +1,8 @@
 <template>
   <label class="label-tag" 
-         v-bind:for="forAtt">
-     {{ labelComp }}<span v-if="mandatory && !readonly" class="mandatory">*</span>
-     <span v-if="hasColon" class="colon">:</span>
+         v-bind:for="tagData.forAtt">
+     {{ labelComp }}<span v-if="tagData.mandatory && !tagData.readonly" class="mandatory">*</span>
+     <span v-if="tagData.hasColon" class="colon">:</span>
   </label>
 </template>
 
@@ -17,7 +17,7 @@ export default {
   props: {
     inputItem: {
       type: Object,
-      default: null
+      required: true
     },
     
     forAtt: {
@@ -73,9 +73,58 @@ export default {
     }
   },
   
+  data: function() {
+    let tagData =  {
+        forAtt: this.forAtt,
+        label: this.label,
+        hasColon: this.hasColon,
+        mandatory: this.mandatory,
+        readonly: this.readonly
+    };
+    
+    // set values from input item if not overridden
+    for (let key in this.inputItem) {
+      if (this.inputItem.hasOwnProperty(key) && 
+          tagData[key] == null && this.inputItem != null) {
+        tagData[key] = this.inputItem[key];
+      }
+    }
+    
+    return {
+      tagData: tagData
+    };
+  },
+  
+  watch: {
+    inputItem: function(newVal) {
+      //update the internal value with the new value
+      let propsSet =  {
+          forAtt: newVal.forAtt,
+          label: newVal.label,
+          hasColon: newVal.hasColon,
+          mandatory: newVal.mandatory,
+          readonly: newVal.readonly
+      };
+      
+      for (let key in propsSet) {
+        if (propsSet[key] != null) {
+          this.tagData[key] = propsSet[key];
+        }
+      }
+      
+      if (this.tagData.forAtt == null) {
+        this.tagData.forAtt = this.tagData.name;
+      }
+      
+      if (this.tagData.label == null) {
+        this.tagData.label = this.tagData.name;
+      }
+    }
+  },
+  
   computed: {
     labelComp: function() {
-      return this.getLabel(this.label);
+      return this.getLabel(this.tagData.label);
     }
   }
   

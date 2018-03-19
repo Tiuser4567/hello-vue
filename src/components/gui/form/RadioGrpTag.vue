@@ -1,10 +1,11 @@
 <template>
-<span v-if="readonly">{{readOnlyValue}}</span> 
+<span v-if="tagData.readonly">{{readOnlyValue}}</span> 
 <div v-else class="radio-grp-tag">
-  <div v-for="([key, val], index) in lookup" v-bind:key="key">
-    <input v-bind:name="name" v-bind:id="index == 0? id : id + '_' + index" 
-           type="radio" v-bind:value="key" v-model="selected"  />
-    <label v-bind:for="index == 0? id : id + '_' + index">{{ getLabel(val) }}</label>
+  <div v-for="([key, val], index) in lookupArray" v-bind:key="key">
+    <input v-bind:name="tagData.name" 
+           v-bind:id="index == 0? tagData.id : tagData.id + '_' + index" 
+           type="radio" v-bind:value="key" v-model="tagData.value"  />
+    <label v-bind:for="index == 0? tagData.id : tagData.id + '_' + index">{{ getLabel(val) }}</label>
   </div>
 </div>
 </template>
@@ -21,31 +22,33 @@ export default {
     event: 'change'
   },
   
-  props: {
-    lookup: {
-      type: Array,
-      default: function() {
-        if (this.inputItem != null && this.inputItem.lookup != null) {
-          return Array.from(this.inputItem.lookup);
-        }
-        
-        return Array.from(new Map());
+  data: function() {
+    let tagData =  {
+        value: this.value,
+        type: this.type,
+        name: this.name,
+        id: this.id,
+        placeholder: this.placeholder,
+        readonly: this.readonly,
+        size: this.size,
+        lookupArray: this.lookupArray
+    };
+    
+    // set values from input item if not overridden
+    for (let key in this.inputItem) {
+      if (this.inputItem.hasOwnProperty(key) && 
+          tagData[key] == null && this.inputItem != null) {
+        tagData[key] = this.inputItem[key];
       }
     }
-  },
-  
-  data: function() {
-    let selected = null;
-    if (this.value != null) {
-      selected = this.value;
-    }
+    
     return {
-      selected: selected
+      tagData: tagData
     };
   },
   
   watch: {
-    selected: function(newVal) {
+    'tagData.value': function(newVal) {
       this.$emit('change', this.inputItem.clone({value: newVal}));
     }
   }

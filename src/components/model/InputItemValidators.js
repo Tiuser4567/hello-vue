@@ -1,4 +1,5 @@
 import InputItemValidator from './InputItemValidator.js';
+import moment from 'moment';
 
 var validators = function() {};
 
@@ -7,19 +8,19 @@ export default validators;
 validators.REQUIRED = new InputItemValidator(function(inputItem, value) {
   if (inputItem.mandatory) {
     if (value == "" || value == null) {
-      return {"validator.required": true};
+      return {"error.required": true};
     }
   }
   return null;
 });
 
 validators.MIN_LENGTH = new InputItemValidator(function(inputItem, value) {
-  if (inputItem.minLength) {
+  if (inputItem.minlength) {
     if (value == null) {
       value = "";
     }
-    if (value.length < inputItem.minLength) {
-      return {"validator.minlength": [inputItem.minLength, value.length]
+    if (value.length < inputItem.minlength) {
+      return {"error.minlength": [inputItem.minlength, value.length]
       };
     }
   }
@@ -28,13 +29,31 @@ validators.MIN_LENGTH = new InputItemValidator(function(inputItem, value) {
 });
 
 validators.MAX_LENGTH = new InputItemValidator(function(inputItem, value) {
-  if (inputItem.maxLength) {
+  if (inputItem.maxlength) {
     if (value == null) {
       value = "";
     }
-    if (value.length > inputItem.maxLength) {
-      return { "validator.maxlength": [ inputItem.maxLength, value.length ] };
+    if (value.length > inputItem.maxlength) {
+      return { "error.maxlength": [ inputItem.maxlength, value.length ] };
     }
+  }
+
+  return null;
+});
+
+validators.DATE_FORMAT = new InputItemValidator(function(inputItem, value) {
+  if (value == "" || value == null) {
+    return null;
+  }
+  
+  let format = "YYYY/MM/DD";
+  if (inputItem.format != null) {
+    format = inputItem.format;
+  }
+  
+  console.log(value);
+  if(!moment(value, format, true).isValid()) {
+    return { "error.dateformat": [ format ] };
   }
 
   return null;

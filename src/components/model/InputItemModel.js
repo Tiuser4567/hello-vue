@@ -1,6 +1,6 @@
-import InputItemValidator from './InputItemValidators.js';
+import InputItemValidators from './InputItemValidators.js';
 
-export default function InputItemModel({name, type, mandatory, label, size, value, minLength, maxLength, lookup, format, placeholder, readonly}={}) {
+export default function InputItemModel({name, type, mandatory, label, size, value, minlength, maxlength, lookup, format, placeholder, readonly}={}) {
   this.name = name;
   this.type = type;
   this.mandatory = mandatory;
@@ -9,8 +9,8 @@ export default function InputItemModel({name, type, mandatory, label, size, valu
   this.readonly = readonly;
   this.value = value;
   this.validators = [];
-  this.minLength = minLength;
-  this.maxLength = maxLength;
+  this.minlength = minlength;
+  this.maxlength = maxlength;
   this.lookup = lookup;
   this.format = format;
   this.placeholder = placeholder;
@@ -38,9 +38,9 @@ InputItemModel.prototype.addValidator = function(validator) {
 }
 
 InputItemModel.prototype.addDefaultValidators = function() {
-  this.addValidator(InputItemValidator.REQUIRED);
-  this.addValidator(InputItemValidator.MIN_LENGTH);
-  this.addValidator(InputItemValidator.MAX_LENGTH);
+  this.addValidator(InputItemValidators.REQUIRED);
+  this.addValidator(InputItemValidators.MIN_LENGTH);
+  this.addValidator(InputItemValidators.MAX_LENGTH);
 }
 
 InputItemModel.prototype.clone = function(opts) {

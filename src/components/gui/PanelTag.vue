@@ -73,6 +73,7 @@ export default {
 }
 
 .panel-tag .panel-header {
+  margin-top: 1em;
   margin-bottom: 5px;
 }
 

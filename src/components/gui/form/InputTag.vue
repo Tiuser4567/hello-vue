@@ -1,11 +1,11 @@
 <template>
-<span v-if="readonly">{{readOnlyValue}}</span> 
-<input v-else v-bind:name="name" v-bind:id="id" class="input-tag"
-  ref="input" v-bind:value="value"
+<span v-if="tagData.readonly">{{readOnlyValue}}</span> 
+<input v-else v-bind:name="tagData.name" v-bind:id="tagData.id" class="input-tag"
+  ref="input" v-bind:value="tagData.value"
   v-on:input="updateValue($event.target.value)"
-  v-on:change="trimValue($event.target.value)" v-bind:type="type"
+  v-on:change="trimValue($event.target.value)" v-bind:type="tagData.type"
   v-bind:placeholder="placeholderComp"
-  v-bind:size="size" /> 
+  v-bind:size="tagData.size" /> 
 </template>
 
 <script>
@@ -88,18 +88,89 @@ export default {
         }
         return null;
       }
+    },
+    
+    lookupArray: {
+      type: Array,
+      default: function() {
+        if (this.inputItem != null && this.inputItem.lookup != null) {
+          return Array.from(this.inputItem.lookup);
+        }
+        
+        return Array.from(new Map());
+      }
     }
+  },
+  
+  data: function() {
+    let tagData =  {
+        value: this.value,
+        type: this.type,
+        name: this.name,
+        id: this.id,
+        placeholder: this.placeholder,
+        readonly: this.readonly,
+        size: this.size,
+        lookup: this.lookup
+    };
+    
+    // set values from input item if not overridden
+    for (let key in this.inputItem) {
+      if (this.inputItem.hasOwnProperty(key) && 
+          tagData[key] == null && this.inputItem != null) {
+        tagData[key] = this.inputItem[key];
+      }
+    }
+    
+    return {
+      tagData: tagData
+    };
   },
   
   computed: {
     placeholderComp: function() {
-      return this.getLabel(this.placeholder);
+      return this.getLabel(this.tagData.placeholder);
     },
+    
     readOnlyValue: function() {
-      if (this.value != null && this.value != "") {
-        return this.value
+      if (this.tagData.value != null && this.tagData.value != "") {
+        if (this.tagData.type == "password") {
+          return this.tagData.value.replace(/./g,"*");
+        }
+        if (this.tagData.lookup == null || this.tagData.lookup.get(this.tagData.value) == null) {
+          return this.tagData.value;
+        } else {
+          return this.getLabel(this.tagData.lookup.get(this.tagData.value));
+        }
       }
       return "-";
+    }
+  },
+  
+  watch: {
+    inputItem: function(newVal) {
+      //update the internal value with the new value
+      let propsSet =  {
+          value: newVal.value,
+          type: newVal.type,
+          name: newVal.name,
+          id: newVal.id,
+          placeholder: newVal.placeholder,
+          readonly: newVal.readonly,
+          size: newVal.size,
+          lookup: newVal.lookup
+      };
+      
+      for (let key in propsSet) {
+        this.tagData[key] = propsSet[key];
+        if (key == 'lookup' && propsSet[key] != null) {
+          this.tagData['lookupArray'] = Array.from(propsSet[key]);
+        }
+      }
+      
+      if (this.tagData.id == null) {
+        this.tagData.id = this.tagData.name;
+      }
     }
   },
   
