@@ -54,14 +54,13 @@
       icon="list-ul"> 
       <form-tag>
           <div v-for="(item, index) of othForm.items" v-bind:key="index">
-           <div class="form-label">
-            <label-tag v-model="othForm.items[index]"></label-tag>
-          </div>
-          <div class="form-input">
-            <radio-grp-tag v-if="othForm.items[index].type == 'radio'" v-model="othForm.items[index]"></radio-grp-tag>
-            <input-tag v-else class="width_80" v-model="othForm.items[index]"></input-tag>
-          </div> 
-          
+            <div class="form-label">
+              <label-tag v-model="othForm.items[index]"></label-tag>
+            </div>
+            <div class="form-input">
+              <radio-grp-tag v-if="othForm.items[index].type == 'radio'" v-model="othForm.items[index]"></radio-grp-tag>
+              <input-tag v-else class="width_80" v-model="othForm.items[index]"></input-tag>
+            </div> 
           </div>
       </form-tag>
       <btn-tag highlight="true" v-on:click="doAdd()" label="btn.add"></btn-tag>
