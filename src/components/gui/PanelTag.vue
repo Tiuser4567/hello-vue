@@ -101,6 +101,10 @@ export default {
   text-align: right;
 }
 
+.panel-tag .toggle-bar button {
+  margin-left: 5px;
+}
+
 .panel-tag .fa-icon {
   vertical-align: top;
 }

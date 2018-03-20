@@ -51,9 +51,21 @@ validators.DATE_FORMAT = new InputItemValidator(function(inputItem, value) {
     format = inputItem.format;
   }
   
-  console.log(value);
   if(!moment(value, format, true).isValid()) {
-    return { "error.dateformat": [ format ] };
+    return { "error.dateformat": [ format.toLowerCase() ] };
+  }
+
+  return null;
+});
+
+validators.NUMBER_FORMAT = new InputItemValidator(function(inputItem, value) {
+  if (value == "" || value == null) {
+    return null;
+  }
+  
+  var notNumberRe = /[^0-9]/g;
+  if (notNumberRe.test(value)) {
+    return {"error.invalidnumberformat": true };
   }
 
   return null;

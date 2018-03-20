@@ -1,12 +1,8 @@
 <template>
 <span v-if="tagData.readonly">{{readOnlyValue}}</span> 
-<div v-else class="radio-grp-tag">
-  <div v-bind:class="{ 'inlineOptions': inline }" v-for="([key, val], index) in lookupArray" v-bind:key="key">
-    <input v-bind:name="tagData.name" 
-           v-bind:id="index == 0? tagData.id : tagData.id + '_' + index" 
-           type="radio" v-bind:value="key" v-model="tagData.value"  />
-    <label v-bind:for="index == 0? tagData.id : tagData.id + '_' + index">{{ getLabel(val) }}</label>
-  </div>
+<div v-else class="textarea-tag">
+  <textarea ref="textarea" v-bind:rows="tagData.rows" v-bind:name="tagData.name" v-bind:id="tagData.id" 
+  v-model.lazy="tagData.value" v-bind:placeholder="placeholderComp"></textarea>
 </div>
 </template>
 
@@ -15,17 +11,17 @@ import InputTag from './InputTag.vue';
 
 export default {
   extends: InputTag,
-  name: 'RadioGrpTag',
+  name: 'TextAreaTag',
   
   model: {
     prop: 'inputItem',
-    event: 'change'
+    event: 'input'
   },
   
   props: {
-    inline: {
-      type: Boolean,
-      default: false
+    rows: {
+      type: Number,
+      default: 4
     }
   },
   
@@ -37,8 +33,7 @@ export default {
         id: this.id,
         placeholder: this.placeholder,
         readonly: this.readonly,
-        size: this.size,
-        lookupArray: this.lookupArray
+        rows: this.rows
     };
     
     // set values from input item if not overridden
@@ -56,7 +51,17 @@ export default {
   
   watch: {
     'tagData.value': function(newVal) {
-      this.$emit('change', this.inputItem.clone({value: newVal}));
+      let formattedValue = newVal;
+      
+      if (newVal != null) {
+        formattedValue = newVal.trim();
+        
+        if (formattedValue != newVal) {
+          this.$refs.textarea.innerHTML = formattedValue;
+        }
+      }
+      
+      this.$emit('input', this.inputItem.clone({value: formattedValue}));
     }
   }
 }
@@ -64,8 +69,7 @@ export default {
 
 
 <style>
-  .radio-grp-tag .inlineOptions {
-    display: inline-block;
-    margin-right: 10px;
+  .textarea-tag textarea {
+    width: 99%;
   }
 </style>

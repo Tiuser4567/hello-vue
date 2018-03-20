@@ -67,7 +67,7 @@ export default {
   }
   
   .error-tag > .error-container {
-    max-height: 3em;
+    max-height: 3.4em;
     background-color: red;
     color: white;
     padding: 10px 0px;

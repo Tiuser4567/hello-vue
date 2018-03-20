@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="screen001">
   <header-tag v-bind:title="getLabel('screens.screen001.title')"></header-tag>
   <error-tag v-bind:errors="errors"></error-tag>
   <div class="content">
@@ -36,7 +36,7 @@
         </div>
         <div class="form-input">
           <radio-grp-tag v-model="profForm.items.gender"></radio-grp-tag>
-        </div>
+        </div> 
         <div class="form-label">
           <label-tag v-model="profForm.items.bday"></label-tag>
         </div>
@@ -71,7 +71,7 @@
       </div>
     </panel-tag>
   </div>
-  <modal-tag v-bind:modal="modalScreen" v-on:update="doModalUpdate"></modal-tag>
+  <modal-tag v-if="modalScreen != null" v-bind:modalScreen="modalScreen" v-on:modalClose="doModalClose" v-on:modalUpdate="doModalUpdate"></modal-tag>
 </div>
 </template>
 
@@ -145,8 +145,8 @@ export default {
         {name: "gender", label: "screens.screen001.gender", 
          mandatory: true, type: "radio", 
          lookup: new Map([
-                   ["m", "screens.screen001.gender.lookup.male"],
-                   ["f", "screens.screen001.gender.lookup.female"]
+                   ["m", "screens.screen001.gender.lookup.m"],
+                   ["f", "screens.screen001.gender.lookup.f"]
                  ]),
         }));
     
@@ -161,8 +161,6 @@ export default {
     var othForm = new FormModel();
     othForm.editMode = true;
     
-    console.log(Modal001a.data());
-    
     return {
       profData: profData,
       profForm: profForm,
@@ -170,7 +168,7 @@ export default {
       othForm: othForm,
       errors: [],
       showModal: true,
-      modalScreen: Modal001a
+      modalScreen: null
     };
   },
   
@@ -222,14 +220,18 @@ export default {
     
     doAdd: function() {
       //show modal
+      this.modalScreen = Modal001a;
+    },
+    
+    doModalClose: function() {
+      this.modalScreen = null;
     },
     
     doModalUpdate: function(data) {
       if (data) {
         if (data.modalId == "Modal001a" && data.item != null) {
-          data.item.readonly = !this.othForm.editMode;
-          this.othForm.addItem(new InputItemModel(
-              data.item));
+          this.othForm.addItem(data.item);
+          this.othForm.setItemOptions(data.item.name, {'readonly': !this.othForm.editMode});
         }
       }
     }
@@ -251,7 +253,5 @@ export default {
 
 
 <style>
-  .width_80 {
-    width: 80%;
-  }
+  
 </style>

@@ -26,10 +26,6 @@ export default {
       AppLocaleService: AppLocaleService,
       currentView: Screen001, 
     };
-  },
-  
-  components: {
-    
   }
 }
 </script>
@@ -54,7 +50,11 @@ body {
 .form-input {
   display: inline-block;
   text-align: left;
-  width: 70%;
+  width: 80%;
   padding-bottom: 0.5em;
+}
+
+.width_80 {
+  width: 80%;
 }
 </style>
