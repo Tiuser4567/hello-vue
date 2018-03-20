@@ -8,7 +8,7 @@ export default {
   "btn.edit": "Edit",
   "btn.add": "Add",
   
-  "screens.screen001.title": "User",
+  "screens.screen001.title": "Users",
   "screens.screen001.profile.nouser": "User Profile",
   "screens.screen001.profile.hasuser": "{0}'s Profile",
   "screens.screen001.otherdetails": "Other Details",

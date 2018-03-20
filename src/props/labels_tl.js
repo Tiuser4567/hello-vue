@@ -8,7 +8,7 @@ export default {
   "btn.edit": "Baguhin",
   "btn.add": "Dagdagan",
   
-  "screens.screen001.title": "Taga-gamit",
+  "screens.screen001.title": "Mga Taga-gamit",
   "screens.screen001.profile.nouser": "Profile ng Taga-gamit",
   "screens.screen001.profile.hasuser": "Profile ni {0}",
   "screens.screen001.otherdetails": "Ibang Detalye",
